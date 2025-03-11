@@ -1,88 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>DogBank</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    #balance { font-size: 24px; margin-bottom: 20px; }
-    #artifacts { margin-top: 20px; }
-    .artifact { border: 1px solid #ccc; padding: 10px; margin: 5px; }
-    #qr-reader { width: 300px; height: 300px; border: 1px solid #000; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DogBank</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Добро пожаловать в DogBank!</h1>
-  <div id="balance">Баланс: 0 DogCoins</div>
-  
-  <button id="start-scan">Начать сканирование QR</button>
-  <div id="qr-reader" style="width:300px"></div>
-  
-  <h2>Купленные DogArtifacts:</h2>
-  <div id="artifacts"></div>
-  
-  <!-- Подключаем библиотеку для сканирования QR-кодов (html5-qrcode) -->
-  <script src="https://unpkg.com/html5-qrcode"></script>
-  <script>
-    let balance = 0;
-    const balanceDisplay = document.getElementById('balance');
-    const artifactsDiv = document.getElementById('artifacts');
+    <div class="container">
+        <h1>🐶 DogBank</h1>
+        <h2>Баланс: <span id="balance">0</span> DogCoins</h2>
 
-    function updateBalance(amount) {
-      balance += amount;
-      balanceDisplay.textContent = 'Баланс: ' + balance + ' DogCoins';
-    }
-    
-    function addArtifact(name) {
-      const div = document.createElement('div');
-      div.className = 'artifact';
-      div.textContent = name;
-      artifactsDiv.appendChild(div);
-    }
+        <h3>Ваши DogArtifacts:</h3>
+        <div id="inventory"></div>
 
-    // Обработка содержимого от сканированного QR-кода
-    function processQRCode(content) {
-      console.log("Сканированный QR:", content);
-      if (content.startsWith("topup:")) {
-        const amount = parseInt(content.split(":")[1]);
-        if (!isNaN(amount)) {
-          updateBalance(amount);
-          alert("Баланс пополнен на " + amount + " DogCoins!");
-        }
-      } else if (content.startsWith("buy:")) {
-        const artifactName = content.split(":")[1];
-        // Предположим, стоимость DogArtifact – 50 DogCoins
-        const price = 50;
-        if (balance >= price) {
-          updateBalance(-price);
-          addArtifact(artifactName);
-          alert("Куплен артефакт: " + artifactName);
-        } else {
-          alert("Недостаточно DogCoins для покупки " + artifactName);
-        }
-      } else {
-        alert("Неизвестный QR-код");
-      }
-    }
+        <video id="preview"></video>
+        <button id="scan-btn">📷 Сканировать QR</button>
 
-    // Инициализация сканера по нажатию кнопки
-    document.getElementById('start-scan').addEventListener('click', function() {
-      const html5QrCode = new Html5Qrcode("qr-reader");
-      const qrCodeSuccessCallback = (decodedText, decodedResult) => {
-        processQRCode(decodedText);
-        // Остановим сканер после успешного считывания (опционально)
-        html5QrCode.stop().then(() => {
-          console.log("Сканирование остановлено.");
-        }).catch(err => {
-          console.error("Ошибка остановки сканера:", err);
-        });
-      };
-      const config = { fps: 10, qrbox: 250 };
-      html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback)
-        .catch(err => {
-          console.error("Ошибка запуска сканера:", err);
-        });
-    });
-  </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/instascan/1.0.0/instascan.min.js"></script>
+        <script src="script.js"></script>
+    </div>
 </body>
 </html>
