@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ff9800;
+}
+
+button {
+    padding: 10px;
+    margin: 10px;
+    background: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e68900;
+}
+
+#qr-code {
+    margin-top: 20px;
+}
+
+.shop-items {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.item {
+    background: #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+video {
+    width: 100%;
+    max-width: 300px;
+    border: 2px solid #ff9800;
+    margin-top: 10px;
+    display: none;
+}
